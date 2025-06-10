@@ -1,6 +1,6 @@
 package com.info.servicios.menu.impl;
 
-import com.info.entradautils.CreadorDeEquipos;
+import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.servicios.gestorEquipo.EquipoService;
 import com.info.servicios.gestorEquipo.impl.EquipoServiceImpl;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class MenuServiceImpl implements MenuService {
 
     private EquipoService equipoService;
-    private CreadorDeEquipos creadorDeEquipos;
+    private CreadorDeEquiposUtil creadorDeEquipos;
     Scanner scanner ;
 
     public MenuServiceImpl (){
@@ -43,7 +43,7 @@ public class MenuServiceImpl implements MenuService {
         switch (opcion) {
             case 1:
                 System.out.println("\n");
-                creadorDeEquipos = new CreadorDeEquipos(scanner);
+                creadorDeEquipos = new CreadorDeEquiposUtil(scanner);
                 equipoService.crearEquipo(creadorDeEquipos.crearEquipo());
                 System.out.println("\n");
                 break;
