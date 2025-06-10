@@ -6,9 +6,10 @@ public class Jugador {
     private int edad;
     private int cantidadGoles;
 
-    public Jugador(String nombre,  int edad){
+    public Jugador(String nombre,  int edad, Equipo equipo){
         this.nombre = nombre;
         this.edad = edad;
+        this.equipo = equipo;
     }
 
     public String getNombre() {
