@@ -2,10 +2,10 @@ package com.info.entradautils;
 
 import java.util.Scanner;
 
-public class CreadorDeEquipos {
+public class CreadorDeEquiposUtil {
     private Scanner scanner;
 
-    public CreadorDeEquipos(Scanner scanner){
+    public CreadorDeEquiposUtil(Scanner scanner){
         this.scanner = scanner;
     }
 
@@ -18,7 +18,7 @@ public class CreadorDeEquipos {
         String nombre = "";
         while(nombre.isBlank()){
             try{
-                nombre = scanner.nextLine();
+                nombre = scanner.nextLine().trim();
             } catch (RuntimeException e) {
                 System.out.print("Entrada invalida. Ingrese un nombre: ");
             }
