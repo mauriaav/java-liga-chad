@@ -12,7 +12,7 @@ public class JugadorSuplente extends Jugador{
     }
 
     public String getTipoJugador(){
-        return "Titular";
+        return "Suplente";
     }
 
     public void agregarPartidosIngresados(){

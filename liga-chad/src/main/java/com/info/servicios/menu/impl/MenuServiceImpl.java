@@ -2,6 +2,7 @@ package com.info.servicios.menu.impl;
 
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
+import com.info.salidautils.ImprimirJugadoresDeEquipo;
 import com.info.servicios.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 import com.info.servicios.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.gestorEquipo.EquipoService;
@@ -36,12 +37,13 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("1. Crear equipo");
             System.out.println("2. Obtener equipos");
             System.out.println("3. Crear jugador");
-            System.out.print("4. SALIR : ");
+            System.out.println("4. Ver jugadores");
+            System.out.print("5. SALIR : ");
 
             condition = this.scanner.nextInt();
             ejecutarOpcion(condition);
 
-        } while (condition != 4);
+        } while (condition != 5);
         scanner.close();
         return condition;
     }
@@ -67,9 +69,16 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 4:
                 System.out.println("\n");
+                ImprimirJugadoresDeEquipo.imprimir(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos(),scanner).getJugadores());
+                System.out.println("\n");
+                break;
+            case 5:
+                System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");
                 break;
+
+
 
             default:
                 break;

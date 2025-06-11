@@ -32,6 +32,10 @@ public class Jugador {
         return cantidadGoles;
     }
 
+    public String getTipoJugador(){
+        return "Libre";
+    }
+
     public void agregarGoles(int goles){
         this.cantidadGoles += goles;
     }
