@@ -2,6 +2,7 @@ package com.info.servicios.gestorJugadores.impl;
 
 import com.info.dominio.Equipo;
 import com.info.dominio.Jugador;
+import com.info.dominio.JugadorSuplente;
 import com.info.dominio.JugadorTitular;
 import com.info.entradautils.CreadorJugadorUtil;
 import com.info.servicios.gestorJugadores.JugadorService;
@@ -25,7 +26,7 @@ public class JugadorServiceImpl implements JugadorService {
             equipo.agregarJugador(nuevoJugador);
         }
         else{
-            Jugador nuevoJugador = new Jugador(nombreJugador,edadJugador,equipo);
+            Jugador nuevoJugador = new JugadorSuplente(nombreJugador,edadJugador,equipo);
             equipo.agregarJugador(nuevoJugador);
         }
 
