@@ -21,6 +21,15 @@ public class CreadorJugadorUtil {
         return leerEnteroPositivo();
     }
 
+    public int tipoDeJugador(){
+        int opcion = 0;
+        while((opcion != 1 && opcion != 2)){
+            System.out.print("Seleccione el tipo de jugador\n1.Titular\n2.Suplente\nOpcion: ");
+            opcion = leerEnteroPositivo();
+        }
+        return opcion;
+    }
+
 
     private String leerNombreValido(){
         String nombre = "";
