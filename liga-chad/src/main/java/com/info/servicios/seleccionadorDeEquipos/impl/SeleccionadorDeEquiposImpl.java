@@ -1,7 +1,7 @@
-package com.info.servicios.SeleccionadorDeEquipos.impl;
+package com.info.servicios.seleccionadorDeEquipos.impl;
 
 import com.info.dominio.Equipo;
-import com.info.servicios.SeleccionadorDeEquipos.SeleccionadorDeEquipos;
+import com.info.servicios.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 
 import java.util.List;
 import java.util.Scanner;
