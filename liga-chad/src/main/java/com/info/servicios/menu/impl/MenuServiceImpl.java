@@ -2,8 +2,8 @@ package com.info.servicios.menu.impl;
 
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
-import com.info.servicios.SeleccionadorDeEquipos.SeleccionadorDeEquipos;
-import com.info.servicios.SeleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
+import com.info.servicios.seleccionadorDeEquipos.SeleccionadorDeEquipos;
+import com.info.servicios.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.gestorEquipo.EquipoService;
 import com.info.servicios.gestorEquipo.impl.EquipoServiceImpl;
 import com.info.servicios.gestorJugadores.JugadorService;
