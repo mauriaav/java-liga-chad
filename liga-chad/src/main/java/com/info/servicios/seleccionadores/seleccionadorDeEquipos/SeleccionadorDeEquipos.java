@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface SeleccionadorDeEquipos {
-    Equipo seleccionar(List<Equipo> equipos, Scanner scanner);
+    Equipo seleccionar(List<Equipo> equipos);
 }

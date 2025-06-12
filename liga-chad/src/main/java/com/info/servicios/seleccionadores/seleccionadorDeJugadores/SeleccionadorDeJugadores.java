@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface SeleccionadorDeJugadores {
-    Jugador seleccionar(List<Jugador> jugadores, Scanner scanner);
+    Jugador seleccionar(List<Jugador> jugadores);
 }

@@ -7,8 +7,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SeleccionadorDeJugadoresImpl implements SeleccionadorDeJugadores {
+    private final Scanner scanner;
+    public SeleccionadorDeJugadoresImpl(Scanner scanner) {
+        this.scanner = scanner;
+    }
     @Override
-    public Jugador seleccionar(List<Jugador> jugadores, Scanner scanner){
+    public Jugador seleccionar(List<Jugador> jugadores){
         if (jugadores.isEmpty()) {
             System.out.println("No hay jugadores disponibles.");
             return null;
