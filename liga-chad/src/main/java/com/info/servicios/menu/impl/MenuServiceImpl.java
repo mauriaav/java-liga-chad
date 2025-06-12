@@ -1,5 +1,6 @@
 package com.info.servicios.menu.impl;
 
+import com.info.dominio.Equipo;
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.salidautils.ImprimirJugadoresDeEquipo;
@@ -15,7 +16,7 @@ import java.util.Scanner;
 public class MenuServiceImpl implements MenuService {
 
     private EquipoService equipoService;
-    private CreadorDeEquiposUtil creadorDeEquipos;
+    private CreadorDeEquiposUtil creadorDeEquiposUtil;
     private SeleccionadorDeEquipos seleccionadorDeEquipos;
     private JugadorService jugadorService;
     Scanner scanner ;
@@ -53,8 +54,9 @@ public class MenuServiceImpl implements MenuService {
         switch (opcion) {
             case 1:
                 System.out.println("\n");
-                creadorDeEquipos = new CreadorDeEquiposUtil(scanner);
-                equipoService.crearEquipo(creadorDeEquipos.crearEquipo());
+                creadorDeEquiposUtil = new CreadorDeEquiposUtil(scanner);
+                Equipo nuevoEquipo = equipoService.crearEquipo(creadorDeEquiposUtil.crearEquipo());
+                jugadorService.crearJugadores(nuevoEquipo);
                 System.out.println("\n");
                 break;
             case 2:
