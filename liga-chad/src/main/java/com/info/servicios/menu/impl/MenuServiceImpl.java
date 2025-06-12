@@ -39,7 +39,7 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("2. Obtener equipos");
             System.out.println("3. Crear jugador");
             System.out.println("4. Ver jugadores");
-            System.out.print("5. Transferir jugadores : ");
+            System.out.println("5. Transferir jugadores : ");
             System.out.print("6. SALIR : ");
 
             condition = this.scanner.nextInt();
@@ -77,7 +77,7 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 5:
                 System.out.println("\n");
-                System.out.println(".");
+                jugadorService.transferirJugadorEntreEquipos(equipoService.getEquipos());
                 System.out.println("\n");
                 break;
             case 6:

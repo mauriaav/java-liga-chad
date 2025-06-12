@@ -32,4 +32,9 @@ public class Equipo {
         System.out.println("Se agregó el jugador " + nuevoJugador.getNombre() + " a "+ this.getNombre() );
         this.jugadores.add(nuevoJugador);
     }
+
+    public void eliminarJugador( Jugador jugadorAEliminar){
+        System.out.println("Se eliminó el jugador " + jugadorAEliminar.getNombre() + " a "+ this.getNombre() );
+        this.jugadores.remove(jugadorAEliminar);
+    }
 }

@@ -6,15 +6,25 @@ import com.info.dominio.JugadorSuplente;
 import com.info.dominio.JugadorTitular;
 import com.info.entradautils.CreadorJugadorUtil;
 import com.info.servicios.gestorJugadores.JugadorService;
+import com.info.servicios.seleccionadores.seleccionadorDeJugadores.SeleccionadorDeJugadores;
+import com.info.servicios.seleccionadores.seleccionadorDeJugadores.impl.SeleccionadorDeJugadoresImpl;
+import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
+import com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class JugadorServiceImpl implements JugadorService {
     private CreadorJugadorUtil creadorJugadorUtil;
     private final Scanner scanner;
+    private final SeleccionadorDeJugadores seleccionadorDeJugadores;
+    private final SeleccionadorDeEquipos seleccionadorDeEquipos;
     public JugadorServiceImpl(Scanner scanner){
         this.scanner = scanner;
         this.creadorJugadorUtil = new CreadorJugadorUtil(this.scanner);
+        this.seleccionadorDeJugadores = new SeleccionadorDeJugadoresImpl(scanner);
+        this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
     }
 
     @Override
@@ -41,5 +51,46 @@ public class JugadorServiceImpl implements JugadorService {
             System.out.print("Deseas seguir creando jugadores?\n1.Si\n2.No\nOpción: ");
             opcion = scanner.nextLine();
         }
+    }
+
+    @Override
+    public void transferirJugadorEntreEquipos(List<Equipo>equipos){
+        if (equipos == null || equipos.isEmpty()) {
+            System.out.println("No hay equipos creados.");
+            return;
+        }
+
+        System.out.println("Seleccione el equipo del jugador a transferir:");
+        Equipo equipoOrigen = seleccionadorDeEquipos.seleccionar(equipos);
+
+        if (equipoOrigen.getJugadores().isEmpty()) {
+            System.out.println("No hay jugadores en " + equipoOrigen.getNombre() + " para transferir.");
+            return;
+        }
+
+        Jugador jugadorATransferir = seleccionadorDeJugadores.seleccionar(equipoOrigen.getJugadores());
+        if (jugadorATransferir == null) {
+            System.out.println("Selección inválida. Cancelando operación.");
+            return;
+        }
+
+        List<Equipo> equiposDestino = new ArrayList<>(equipos);
+        equiposDestino.remove(equipoOrigen);
+
+        if (equiposDestino.isEmpty()) {
+            System.out.println("No hay otros equipos para transferir al jugador.");
+            return;
+        }
+
+        System.out.println("Seleccione el equipo destino:");
+        Equipo equipoDestino = seleccionadorDeEquipos.seleccionar(equiposDestino);
+
+        equipoOrigen.eliminarJugador(jugadorATransferir);
+        jugadorATransferir.setEquipo(equipoDestino);
+        equipoDestino.agregarJugador(jugadorATransferir);
+
+        System.out.println("El jugador " + jugadorATransferir.getNombre() +
+                " fue transferido de " + equipoOrigen.getNombre() +
+                " a " + equipoDestino.getNombre() + ".");
     }
 }
