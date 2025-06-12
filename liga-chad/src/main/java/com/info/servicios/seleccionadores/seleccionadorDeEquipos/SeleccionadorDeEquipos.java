@@ -1,4 +1,4 @@
-package com.info.servicios.seleccionadorDeEquipos;
+package com.info.servicios.seleccionadores.seleccionadorDeEquipos;
 
 import com.info.dominio.Equipo;
 
