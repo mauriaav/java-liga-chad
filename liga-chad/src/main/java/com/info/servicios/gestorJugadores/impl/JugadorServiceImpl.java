@@ -10,7 +10,7 @@ import com.info.servicios.gestorJugadores.JugadorService;
 import java.util.Scanner;
 
 public class JugadorServiceImpl implements JugadorService {
-    CreadorJugadorUtil creadorJugadorUtil;
+    private CreadorJugadorUtil creadorJugadorUtil;
     private final Scanner scanner;
     public JugadorServiceImpl(Scanner scanner){
         this.scanner = scanner;
@@ -30,5 +30,16 @@ public class JugadorServiceImpl implements JugadorService {
             equipo.agregarJugador(nuevoJugador);
         }
 
+    }
+
+    @Override
+    public void crearJugadores(Equipo equipo){
+        String opcion = "";
+        while(!opcion.equals("2")){
+            System.out.println("-----Crear jugadores para " + equipo.getNombre());
+            this.crearJugador(equipo);
+            System.out.print("Deseas seguir creando jugadores?\n1.Si\n2.No\nOpción: ");
+            opcion = scanner.nextLine();
+        }
     }
 }
