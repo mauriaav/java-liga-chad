@@ -22,8 +22,8 @@ public class MenuServiceImpl implements MenuService {
     Scanner scanner ;
 
     public MenuServiceImpl (){
-        this.equipoService = new EquipoServiceImpl();
         this.scanner = new Scanner(System.in);
+        this.equipoService = new EquipoServiceImpl(scanner);
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl();
         this.jugadorService = new JugadorServiceImpl(scanner);
     }
@@ -54,8 +54,7 @@ public class MenuServiceImpl implements MenuService {
         switch (opcion) {
             case 1:
                 System.out.println("\n");
-                creadorDeEquiposUtil = new CreadorDeEquiposUtil(scanner);
-                Equipo nuevoEquipo = equipoService.crearEquipo(creadorDeEquiposUtil.crearEquipo());
+                Equipo nuevoEquipo=equipoService.crearEquipo();
                 jugadorService.crearJugadores(nuevoEquipo);
                 System.out.println("\n");
                 break;
@@ -71,7 +70,8 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 4:
                 System.out.println("\n");
-                ImprimirJugadoresDeEquipo.imprimir(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos(),scanner).getJugadores());
+                Equipo seleccionado = seleccionadorDeEquipos.seleccionar(equipoService.getEquipos(),scanner);
+                ImprimirJugadoresDeEquipo.imprimir(seleccionado.getJugadores());
                 System.out.println("\n");
                 break;
             case 5:
