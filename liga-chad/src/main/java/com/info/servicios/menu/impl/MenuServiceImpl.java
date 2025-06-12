@@ -4,8 +4,8 @@ import com.info.dominio.Equipo;
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.salidautils.ImprimirJugadoresDeEquipo;
-import com.info.servicios.seleccionadorDeEquipos.SeleccionadorDeEquipos;
-import com.info.servicios.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
+import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
+import com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.gestorEquipo.EquipoService;
 import com.info.servicios.gestorEquipo.impl.EquipoServiceImpl;
 import com.info.servicios.gestorJugadores.JugadorService;
@@ -24,7 +24,7 @@ public class MenuServiceImpl implements MenuService {
     public MenuServiceImpl (){
         this.scanner = new Scanner(System.in);
         this.equipoService = new EquipoServiceImpl(scanner);
-        this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl();
+        this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
         this.jugadorService = new JugadorServiceImpl(scanner);
     }
 
@@ -39,12 +39,13 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("2. Obtener equipos");
             System.out.println("3. Crear jugador");
             System.out.println("4. Ver jugadores");
-            System.out.print("5. SALIR : ");
+            System.out.println("5. Transferir jugadores : ");
+            System.out.print("6. SALIR : ");
 
             condition = this.scanner.nextInt();
             ejecutarOpcion(condition);
 
-        } while (condition != 5);
+        } while (condition != 6);
         scanner.close();
         return condition;
     }
@@ -65,16 +66,21 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 3:
                 System.out.println("\n");
-                jugadorService.crearJugador(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos(),scanner));
+                jugadorService.crearJugador(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos()));
                 System.out.println("\n");
                 break;
             case 4:
                 System.out.println("\n");
-                Equipo seleccionado = seleccionadorDeEquipos.seleccionar(equipoService.getEquipos(),scanner);
+                Equipo seleccionado = seleccionadorDeEquipos.seleccionar(equipoService.getEquipos());
                 ImprimirJugadoresDeEquipo.imprimir(seleccionado.getJugadores());
                 System.out.println("\n");
                 break;
             case 5:
+                System.out.println("\n");
+                jugadorService.transferirJugadorEntreEquipos(equipoService.getEquipos());
+                System.out.println("\n");
+                break;
+            case 6:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");

@@ -1,14 +1,19 @@
-package com.info.servicios.seleccionadorDeEquipos.impl;
+package com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl;
 
 import com.info.dominio.Equipo;
-import com.info.servicios.seleccionadorDeEquipos.SeleccionadorDeEquipos;
+import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class SeleccionadorDeEquiposImpl implements SeleccionadorDeEquipos {
+    private final Scanner scanner;
+
+    public SeleccionadorDeEquiposImpl(Scanner scanner){
+        this.scanner = scanner;
+    }
     @Override
-    public Equipo seleccionar(List<Equipo> equipos, Scanner scanner) {
+    public Equipo seleccionar(List<Equipo> equipos) {
         if (equipos.isEmpty()) {
             System.out.println("No hay equipos disponibles.");
             return null;
