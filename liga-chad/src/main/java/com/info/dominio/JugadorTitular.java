@@ -19,4 +19,9 @@ public class JugadorTitular extends Jugador{
     public void agregarMinutosJugados(int minutos){
         this.minutosJugados += minutos;
     }
+
+    public void restarMinutosJugados(int minutos){
+        this.minutosJugados -= minutos;
+    }
+
 }
