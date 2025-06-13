@@ -55,8 +55,8 @@ public class JugadorServiceImpl implements JugadorService {
 
     @Override
     public void transferirJugadorEntreEquipos(List<Equipo>equipos){
-        if (equipos == null || equipos.isEmpty()) {
-            System.out.println("No hay equipos creados.");
+        if (equipos == null || equipos.isEmpty()||equipos.size()<2) {
+            System.out.println("No hay equipos suficientes para transferir.");
             return;
         }
 
@@ -76,11 +76,6 @@ public class JugadorServiceImpl implements JugadorService {
 
         List<Equipo> equiposDestino = new ArrayList<>(equipos);
         equiposDestino.remove(equipoOrigen);
-
-        if (equiposDestino.isEmpty()) {
-            System.out.println("No hay otros equipos para transferir al jugador.");
-            return;
-        }
 
         System.out.println("Seleccione el equipo destino:");
         Equipo equipoDestino = seleccionadorDeEquipos.seleccionar(equiposDestino);

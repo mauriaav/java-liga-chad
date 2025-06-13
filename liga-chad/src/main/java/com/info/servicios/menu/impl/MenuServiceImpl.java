@@ -4,6 +4,8 @@ import com.info.dominio.Equipo;
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.salidautils.ImprimirJugadoresDeEquipo;
+import com.info.servicios.gestorPartidos.PartidoService;
+import com.info.servicios.gestorPartidos.impl.PartidoServiceImpl;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.gestorEquipo.EquipoService;
@@ -16,15 +18,16 @@ import java.util.Scanner;
 public class MenuServiceImpl implements MenuService {
 
     private EquipoService equipoService;
-    private CreadorDeEquiposUtil creadorDeEquiposUtil;
     private SeleccionadorDeEquipos seleccionadorDeEquipos;
     private JugadorService jugadorService;
+    private PartidoService partidoService;
     Scanner scanner ;
 
     public MenuServiceImpl (){
         this.scanner = new Scanner(System.in);
         this.equipoService = new EquipoServiceImpl(scanner);
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
+        this.partidoService = new PartidoServiceImpl(scanner);
         this.jugadorService = new JugadorServiceImpl(scanner);
     }
 
@@ -40,12 +43,13 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("3. Crear jugador");
             System.out.println("4. Ver jugadores");
             System.out.println("5. Transferir jugadores : ");
-            System.out.print("6. SALIR : ");
+            System.out.println("6. Jugar partido : ");
+            System.out.print("7. SALIR : ");
 
             condition = this.scanner.nextInt();
             ejecutarOpcion(condition);
 
-        } while (condition != 6);
+        } while (condition != 7);
         scanner.close();
         return condition;
     }
@@ -81,6 +85,11 @@ public class MenuServiceImpl implements MenuService {
                 System.out.println("\n");
                 break;
             case 6:
+                System.out.println("\n");
+                partidoService.crearPartido(equipoService.getEquipos());
+                System.out.println("\n");
+                break;
+            case 7:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");

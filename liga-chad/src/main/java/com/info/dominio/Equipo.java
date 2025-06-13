@@ -37,4 +37,8 @@ public class Equipo {
         System.out.println("Se eliminó el jugador " + jugadorAEliminar.getNombre() + " a "+ this.getNombre() );
         this.jugadores.remove(jugadorAEliminar);
     }
+
+    public void agregarPartido(Partido partido){
+        this.partidosJugados.add(partido);
+    }
 }

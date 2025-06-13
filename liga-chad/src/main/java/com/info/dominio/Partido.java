@@ -9,12 +9,10 @@ public class Partido {
     private Map<Equipo, Integer> resultado;
     private Map<Jugador, Integer> golesPorJugador;
 
-    public Partido(Equipo local, Equipo visitante) {
+    public Partido(Equipo local, Equipo visitante, Map<Equipo,Integer> resultado, Map<Jugador,Integer> golesPorJugador) {
         this.local = local;
         this.visitante = visitante;
         this.resultado = new HashMap<>();
-        resultado.put(local,0);
-        resultado.put(visitante,0);
         this.golesPorJugador = new HashMap<>();
     }
 
