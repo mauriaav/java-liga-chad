@@ -1,9 +1,9 @@
 package com.info.servicios.gestorPartidos.impl;
 
-import com.info.dominio.Equipo;
-import com.info.dominio.Jugador;
-import com.info.dominio.Partido;
+import com.info.dominio.*;
 import com.info.entradautils.CrearGolesUtil;
+import com.info.servicios.gestorJugadores.JugadorService;
+import com.info.servicios.gestorJugadores.impl.JugadorServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
 import com.info.servicios.menu.MenuService;
 import com.info.servicios.menu.impl.MenuSiNoImpl;
@@ -17,14 +17,18 @@ import java.util.*;
 public class PartidoServiceImpl implements PartidoService {
     private final SeleccionadorDeEquipos seleccionadorDeEquipos;
     private final SeleccionadorDeJugadores seleccionadorDeJugadores;
+    private final JugadorService jugadorService;
     private final CrearGolesUtil crearGolesUtil;
     private final MenuService siNoMenu;
+    private final Scanner scanner;
 
     public PartidoServiceImpl(Scanner scanner){
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
         this.seleccionadorDeJugadores = new SeleccionadorDeJugadoresImpl(scanner);
         this.crearGolesUtil = new CrearGolesUtil(scanner);
+        this.jugadorService = new JugadorServiceImpl(scanner);
         this.siNoMenu = new MenuSiNoImpl(scanner);
+        this.scanner = scanner;
     }
 
     @Override
@@ -50,12 +54,12 @@ public class PartidoServiceImpl implements PartidoService {
         System.out.println("\nCuántos goles hizo el local?");
         int golesLocal = crearGolesUtil.crearGol();
         Map<Jugador,Integer> golesPorJugador = new HashMap<>(this.quienHizoGoles(equipoLocal,golesLocal));
+        this.minutosEIngresos(equipoLocal);
+
         System.out.println("\nCuántos goles hizo el vistante?");
         int golesVisitante = crearGolesUtil.crearGol();
         golesPorJugador.putAll(this.quienHizoGoles(equipoVisitante,golesVisitante));
-
-        System.out.println("\nIngresó algún suplente?");
-        siNoMenu.seleccionarOpcionMenu()
+        this.minutosEIngresos(equipoVisitante);
 
 
         Map<Equipo,Integer> resultado = new HashMap<>();
@@ -88,5 +92,42 @@ public class PartidoServiceImpl implements PartidoService {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    public void minutosEIngresos(Equipo equipo){
+        List<Jugador> titulares = jugadorService.jugadoresTitular(equipo);
+        List<Jugador> suplentes = jugadorService.jugadoresSuplentes(equipo);
+        if(suplentes == null || suplentes.isEmpty()){
+            System.out.println("No hay jugadores para hacer cambios.");
+            return;
+        }
+        for (Jugador titular : titulares){
+            ((JugadorTitular) titular).agregarMinutosJugados(90);
+        }
+        System.out.println("Ingresó algún suplente?");
+        int condition = 0;
+        if (siNoMenu.seleccionarOpcionMenu()==1){
+            do{
+                if(titulares.isEmpty()){
+                    System.out.println("No hay más jugadores para hacer cambios.");
+                    return;
+                }
+
+                System.out.println("Qué jugador salió?");
+                JugadorTitular jugadorRetirado =  (JugadorTitular) seleccionadorDeJugadores.seleccionar(titulares);
+                titulares.remove(jugadorRetirado);
+                System.out.println("En qué minuto (m) salió? ");
+                int minutoSalida = scanner.nextInt();
+                scanner.nextLine();//agregar validador de entero positivo
+                jugadorRetirado.restarMinutosJugados(90-minutoSalida);
+                System.out.println("Qué jugador ingresó?");
+                JugadorSuplente jugadorIngresado = (JugadorSuplente)seleccionadorDeJugadores.seleccionar(suplentes);
+                suplentes.remove(jugadorIngresado);
+                jugadorIngresado.agregarPartidosIngresados();
+
+                System.out.println("Hubo algún otro cambio?");
+                condition = siNoMenu.seleccionarOpcionMenu();
+            }while (condition!=2);
+        }
     }
 }

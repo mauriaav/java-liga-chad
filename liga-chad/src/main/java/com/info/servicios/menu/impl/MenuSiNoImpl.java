@@ -18,8 +18,8 @@ public class MenuSiNoImpl implements MenuService {
             System.out.println("1. Si");
             System.out.println("2. No");
             condition = this.scanner.nextInt();
+            scanner.nextLine();
         } while (condition != 1 && condition!=2);
-        scanner.close();
         return condition;
 
     }

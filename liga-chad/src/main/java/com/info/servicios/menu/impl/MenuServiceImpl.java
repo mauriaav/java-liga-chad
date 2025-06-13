@@ -53,10 +53,10 @@ public class MenuServiceImpl implements MenuService {
             System.out.print("10. SALIR : ");
 
             condition = this.scanner.nextInt();
+            scanner.nextLine();
             ejecutarOpcion(condition);
 
         } while (condition != 10);
-        scanner.close();
         return condition;
     }
 
