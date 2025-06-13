@@ -48,12 +48,14 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("5. Transferir jugadores");
             System.out.println("6. Jugar partido");
             System.out.println("7. Ver goleador de la liga");
-            System.out.print("8. SALIR : ");
+            System.out.println("8. Ver promedio de gol de los equipos");
+            System.out.println("9. Ver equipos por goles ");
+            System.out.print("10. SALIR : ");
 
             condition = this.scanner.nextInt();
             ejecutarOpcion(condition);
 
-        } while (condition != 9);
+        } while (condition != 10);
         scanner.close();
         return condition;
     }
@@ -69,7 +71,7 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 2:
                 System.out.println("\n");
-                ImprimirEquipos.imprimir(equipoService.getEquipos());
+                ImprimirEquipos.imprimir(equipoService);
                 System.out.println("\n");
                 break;
             case 3:
@@ -104,6 +106,11 @@ public class MenuServiceImpl implements MenuService {
                 System.out.println("\n");
                 break;
             case 9:
+                System.out.println("\n");
+                ImprimirEquipos.imprimirOrdenado(equipoService);
+                System.out.println("\n");
+                break;
+            case 10:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");

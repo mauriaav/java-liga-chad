@@ -10,4 +10,6 @@ public interface JugadorService {
     void crearJugadores(Equipo equipo);
     void transferirJugadorEntreEquipos(List<Equipo> equipos);
     void crearJugadoresTest(Equipo equipo);
+    List<Jugador> jugadoresTitular(Equipo equipo);
+    List<Jugador> jugadoresSuplentes(Equipo equipo);
 }

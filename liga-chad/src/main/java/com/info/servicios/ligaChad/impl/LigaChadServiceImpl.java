@@ -38,7 +38,7 @@ public class LigaChadServiceImpl implements LigaChadService {
                 goleador = jugador;
             }
         }
-        System.out.println("El goleador es: " + goleador.getNombre() + " con " + goleador.getCantidadGoles() + " goles.");
+        System.out.println("El goleador es: " + goleador.getNombre() + " con "+ goleador.getCantidadGoles() +" goles.");
     }
 
     @Override

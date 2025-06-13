@@ -5,6 +5,8 @@ import com.info.dominio.Jugador;
 import com.info.dominio.Partido;
 import com.info.entradautils.CrearGolesUtil;
 import com.info.servicios.gestorPartidos.PartidoService;
+import com.info.servicios.menu.MenuService;
+import com.info.servicios.menu.impl.MenuSiNoImpl;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.seleccionadores.seleccionadorDeJugadores.SeleccionadorDeJugadores;
@@ -16,11 +18,13 @@ public class PartidoServiceImpl implements PartidoService {
     private final SeleccionadorDeEquipos seleccionadorDeEquipos;
     private final SeleccionadorDeJugadores seleccionadorDeJugadores;
     private final CrearGolesUtil crearGolesUtil;
+    private final MenuService siNoMenu;
 
     public PartidoServiceImpl(Scanner scanner){
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
         this.seleccionadorDeJugadores = new SeleccionadorDeJugadoresImpl(scanner);
         this.crearGolesUtil = new CrearGolesUtil(scanner);
+        this.siNoMenu = new MenuSiNoImpl(scanner);
     }
 
     @Override
@@ -31,12 +35,17 @@ public class PartidoServiceImpl implements PartidoService {
         }
         System.out.println("Seleccione el equipo local:");
         Equipo equipoLocal = seleccionadorDeEquipos.seleccionar(equipos);
-
+        if(noTieneJugadoresDisponibles(equipoLocal)){
+            return null;
+        }
         List<Equipo> posiblesVisitantes = new ArrayList<>(equipos);
         posiblesVisitantes.remove(equipoLocal);
 
         System.out.println("Seleccione el equipo visitante:");
         Equipo equipoVisitante = seleccionadorDeEquipos.seleccionar(posiblesVisitantes);
+        if(noTieneJugadoresDisponibles(equipoVisitante)){
+            return null;
+        }
 
         System.out.println("\nCuántos goles hizo el local?");
         int golesLocal = crearGolesUtil.crearGol();
@@ -44,6 +53,10 @@ public class PartidoServiceImpl implements PartidoService {
         System.out.println("\nCuántos goles hizo el vistante?");
         int golesVisitante = crearGolesUtil.crearGol();
         golesPorJugador.putAll(this.quienHizoGoles(equipoVisitante,golesVisitante));
+
+        System.out.println("\nIngresó algún suplente?");
+        siNoMenu.seleccionarOpcionMenu()
+
 
         Map<Equipo,Integer> resultado = new HashMap<>();
         resultado.put(equipoLocal,golesLocal);
@@ -67,5 +80,13 @@ public class PartidoServiceImpl implements PartidoService {
         }
         return golesPorJugador;
 
+    }
+
+    public boolean noTieneJugadoresDisponibles(Equipo equipo){
+        if(equipo.getJugadores() == null||equipo.getJugadores().isEmpty()){
+            System.out.println(equipo.getNombre() + " no tiene jugadores suficientes para disputar el partido");
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }
