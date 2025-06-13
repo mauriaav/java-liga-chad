@@ -10,6 +10,7 @@ public class Jugador {
         this.nombre = nombre;
         this.edad = edad;
         this.equipo = equipo;
+        this.cantidadGoles = 0;
     }
 
     public String getNombre() {
@@ -37,6 +38,6 @@ public class Jugador {
     }
 
     public void agregarGoles(int goles){
-        this.cantidadGoles += goles;
+        this.cantidadGoles =cantidadGoles+ goles;
     }
 }

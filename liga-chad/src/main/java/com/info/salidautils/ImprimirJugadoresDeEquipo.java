@@ -9,13 +9,13 @@ public class ImprimirJugadoresDeEquipo {
         System.out.println("-------Titulares-------");
         for(Jugador jugador : jugadores){
             if(jugador.getTipoJugador().equals("Titular")){
-                System.out.println(jugador.getNombre() + " edad: " + jugador.getEdad());
+                System.out.println(jugador.getNombre() + " edad: " + jugador.getEdad() + " goles: " + jugador.getCantidadGoles());
             }
         }
         System.out.println("-------Suplentes-------");
         for(Jugador jugador : jugadores){
             if(jugador.getTipoJugador().equals("Suplente")){
-                System.out.println(jugador.getNombre() + " edad: " + jugador.getEdad());
+                System.out.println(jugador.getNombre() + " edad: " + jugador.getEdad() + " goles: " + jugador.getCantidadGoles());
             }
         }
     }
