@@ -96,4 +96,26 @@ public class JugadorServiceImpl implements JugadorService {
         Jugador jugador2 = new JugadorSuplente("Borja"+equipo.getNombre(),29,equipo);
         equipo.agregarJugador(jugador2);
     }
+
+    @Override
+    public List<Jugador> jugadoresTitular(Equipo equipo){
+        List<Jugador> listaTitulares = new ArrayList<>();
+        for(Jugador jugador : equipo.getJugadores()){
+            if (jugador.getTipoJugador().equals("Titular")){
+                listaTitulares.add(jugador);
+            }
+        }
+        return listaTitulares;
+    }
+
+    @Override
+    public List<Jugador> jugadoresSuplentes(Equipo equipo){
+        List<Jugador> listaSuplentes = new ArrayList<>();
+        for(Jugador jugador : equipo.getJugadores()){
+            if (jugador.getTipoJugador().equals("Suplente")){
+                listaSuplentes.add(jugador);
+            }
+        }
+        return listaSuplentes;
+    }
 }
