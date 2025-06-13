@@ -7,4 +7,5 @@ import java.util.List;
 public interface LigaChadService {
     void iniciarLiga();
     void goleadorDeLaLiga(List<Equipo> equipos);
+    void promedioGol(List<Equipo> equipos);
 }
