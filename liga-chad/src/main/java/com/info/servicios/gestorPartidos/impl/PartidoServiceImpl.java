@@ -38,10 +38,10 @@ public class PartidoServiceImpl implements PartidoService {
         System.out.println("Seleccione el equipo visitante:");
         Equipo equipoVisitante = seleccionadorDeEquipos.seleccionar(posiblesVisitantes);
 
-        System.out.println("Cuántos goles hizo el local?");
+        System.out.println("\nCuántos goles hizo el local?");
         int golesLocal = crearGolesUtil.crearGol();
         Map<Jugador,Integer> golesPorJugador = new HashMap<>(this.quienHizoGoles(equipoLocal,golesLocal));
-        System.out.println("Cuántos goles hizo el vistante?");
+        System.out.println("\nCuántos goles hizo el vistante?");
         int golesVisitante = crearGolesUtil.crearGol();
         golesPorJugador.putAll(this.quienHizoGoles(equipoVisitante,golesVisitante));
 
@@ -55,18 +55,15 @@ public class PartidoServiceImpl implements PartidoService {
 
     }
 
-    public Map<Jugador,Integer> quienHizoGoles(Equipo e, int goles){
-        Map<Jugador,Integer> golesPorJugador = new HashMap<>();
-        int golesAcumulados = 0;
+    public Map<Jugador,Integer> quienHizoGoles(Equipo e, int goles) {
+        Map<Jugador, Integer> golesPorJugador = new HashMap<>();
+        System.out.println();
         System.out.println("Quién hizo los goles de " + e.getNombre()+"?");
         for (int i = 1; i <= goles; i++){
             System.out.println("Gol número " + i +".\nLo hizo: ");
             Jugador autorGol = seleccionadorDeJugadores.seleccionar(e.getJugadores());
-            if(golesPorJugador.containsKey(autorGol)){
-                golesAcumulados = golesAcumulados + golesPorJugador.get(autorGol);
-            }
-            golesPorJugador.put(autorGol,1);
-            autorGol.agregarGoles(golesAcumulados);
+            autorGol.agregarGol();
+            golesPorJugador.put(autorGol,autorGol.getCantidadGoles()+1);
         }
         return golesPorJugador;
 

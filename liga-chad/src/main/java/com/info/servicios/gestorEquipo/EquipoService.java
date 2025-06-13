@@ -7,4 +7,5 @@ import java.util.List;
 public interface EquipoService {
     Equipo crearEquipo();
     List<Equipo> getEquipos();
+    void crearEquipoTest();
 }

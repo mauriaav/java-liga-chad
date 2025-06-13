@@ -9,4 +9,5 @@ public interface JugadorService {
     void crearJugador(Equipo equipo);
     void crearJugadores(Equipo equipo);
     void transferirJugadorEntreEquipos(List<Equipo> equipos);
+    void crearJugadoresTest(Equipo equipo);
 }

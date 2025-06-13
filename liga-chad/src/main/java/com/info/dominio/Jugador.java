@@ -40,4 +40,8 @@ public class Jugador {
     public void agregarGoles(int goles){
         this.cantidadGoles =cantidadGoles+ goles;
     }
+
+    public void agregarGol(){
+        this.cantidadGoles++;
+    }
 }

@@ -1,11 +1,12 @@
 package com.info.servicios.menu.impl;
 
 import com.info.dominio.Equipo;
-import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.salidautils.ImprimirJugadoresDeEquipo;
 import com.info.servicios.gestorPartidos.PartidoService;
 import com.info.servicios.gestorPartidos.impl.PartidoServiceImpl;
+import com.info.servicios.ligaChad.LigaChadService;
+import com.info.servicios.ligaChad.impl.LigaChadServiceImpl;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.gestorEquipo.EquipoService;
@@ -21,6 +22,7 @@ public class MenuServiceImpl implements MenuService {
     private SeleccionadorDeEquipos seleccionadorDeEquipos;
     private JugadorService jugadorService;
     private PartidoService partidoService;
+    private LigaChadService ligaChadService;
     Scanner scanner ;
 
     public MenuServiceImpl (){
@@ -29,6 +31,7 @@ public class MenuServiceImpl implements MenuService {
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
         this.partidoService = new PartidoServiceImpl(scanner);
         this.jugadorService = new JugadorServiceImpl(scanner);
+        this.ligaChadService = new LigaChadServiceImpl(scanner);
     }
 
     @Override
@@ -42,14 +45,15 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("2. Obtener equipos");
             System.out.println("3. Crear jugador");
             System.out.println("4. Ver jugadores");
-            System.out.println("5. Transferir jugadores : ");
-            System.out.println("6. Jugar partido : ");
-            System.out.print("7. SALIR : ");
+            System.out.println("5. Transferir jugadores");
+            System.out.println("6. Jugar partido");
+            System.out.println("7. Ver goleador de la liga");
+            System.out.print("8. SALIR : ");
 
             condition = this.scanner.nextInt();
             ejecutarOpcion(condition);
 
-        } while (condition != 7);
+        } while (condition != 8);
         scanner.close();
         return condition;
     }
@@ -91,7 +95,19 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 7:
                 System.out.println("\n");
+                ligaChadService.goleadorDeLaLiga(equipoService.getEquipos());
+                System.out.println("\n");
+                break;
+            case 8:
+                System.out.println("\n");
                 System.out.println("Adios.");
+                System.out.println("\n");
+                break;
+            case 99:
+                System.out.println("\n");
+                equipoService.crearEquipoTest();
+                jugadorService.crearJugadoresTest(equipoService.getEquipos().get(0));
+                jugadorService.crearJugadoresTest(equipoService.getEquipos().get(1));
                 System.out.println("\n");
                 break;
 

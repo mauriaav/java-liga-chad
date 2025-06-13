@@ -88,4 +88,12 @@ public class JugadorServiceImpl implements JugadorService {
                 " fue transferido de " + equipoOrigen.getNombre() +
                 " a " + equipoDestino.getNombre() + ".");
     }
+
+    @Override
+    public void crearJugadoresTest(Equipo equipo){
+        Jugador jugador1 = new JugadorTitular("Mastantuono"+equipo.getNombre(),17,equipo);
+        equipo.agregarJugador(jugador1);
+        Jugador jugador2 = new JugadorSuplente("Borja"+equipo.getNombre(),29,equipo);
+        equipo.agregarJugador(jugador2);
+    }
 }

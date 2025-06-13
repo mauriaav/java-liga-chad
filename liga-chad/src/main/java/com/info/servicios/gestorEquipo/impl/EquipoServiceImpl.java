@@ -30,4 +30,12 @@ public class EquipoServiceImpl implements EquipoService {
     public List<Equipo> getEquipos(){
         return equipos;
     }
+
+    @Override
+    public void crearEquipoTest(){
+        Equipo equipoTest = new Equipo("RiverT");
+        Equipo equipoTest2 = new Equipo("BocaT");
+        equipos.add(equipoTest);
+        equipos.add(equipoTest2);
+    }
 }
