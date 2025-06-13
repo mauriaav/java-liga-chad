@@ -12,8 +12,8 @@ public class Partido {
     public Partido(Equipo local, Equipo visitante, Map<Equipo,Integer> resultado, Map<Jugador,Integer> golesPorJugador) {
         this.local = local;
         this.visitante = visitante;
-        this.resultado = new HashMap<>();
-        this.golesPorJugador = new HashMap<>();
+        this.resultado = resultado;
+        this.golesPorJugador = golesPorJugador;
     }
 
     public Map<Equipo, Integer> getResultado() {

@@ -53,7 +53,7 @@ public class MenuServiceImpl implements MenuService {
             condition = this.scanner.nextInt();
             ejecutarOpcion(condition);
 
-        } while (condition != 8);
+        } while (condition != 9);
         scanner.close();
         return condition;
     }
@@ -99,6 +99,11 @@ public class MenuServiceImpl implements MenuService {
                 System.out.println("\n");
                 break;
             case 8:
+                System.out.println("\n");
+                ligaChadService.promedioGol(equipoService.getEquipos());
+                System.out.println("\n");
+                break;
+            case 9:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");

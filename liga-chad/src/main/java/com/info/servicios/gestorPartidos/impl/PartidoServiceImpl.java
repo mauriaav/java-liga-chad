@@ -63,7 +63,7 @@ public class PartidoServiceImpl implements PartidoService {
             System.out.println("Gol número " + i +".\nLo hizo: ");
             Jugador autorGol = seleccionadorDeJugadores.seleccionar(e.getJugadores());
             autorGol.agregarGol();
-            golesPorJugador.put(autorGol,autorGol.getCantidadGoles()+1);
+            golesPorJugador.put(autorGol, golesPorJugador.getOrDefault(autorGol, 0) + 1);
         }
         return golesPorJugador;
 
