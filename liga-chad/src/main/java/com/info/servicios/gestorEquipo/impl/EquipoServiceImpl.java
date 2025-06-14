@@ -1,9 +1,6 @@
 package com.info.servicios.gestorEquipo.impl;
 
-import com.info.dominio.Equipo;
-import com.info.dominio.Jugador;
-import com.info.dominio.JugadorSuplente;
-import com.info.dominio.Partido;
+import com.info.dominio.*;
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.servicios.gestorEquipo.EquipoService;
 
@@ -78,4 +75,26 @@ public class EquipoServiceImpl implements EquipoService {
         }
         return jugadoresSinJugar;
     }
+
+    @Override
+    public Jugador jugadorConMasMinutos(){
+        List<Jugador> jugadoresTitulares = new ArrayList<>();
+        for(Equipo equipo : equipos){
+            for(Jugador jugador : equipo.getJugadores()){
+                if(jugador instanceof JugadorTitular){
+                    jugadoresTitulares.add(jugador);
+                }
+            }
+        }
+        Jugador jugadorConMasMinutos = jugadoresTitulares.get(0);
+        for (Jugador jugador : jugadoresTitulares){
+            if(((JugadorTitular) jugador).getMinutosJugados() > ((JugadorTitular) jugadorConMasMinutos).getMinutosJugados()){
+                jugadorConMasMinutos = jugador;
+            }
+
+        }
+        return  jugadorConMasMinutos;
+    }
+
+
 }

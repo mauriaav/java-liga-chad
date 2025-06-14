@@ -57,13 +57,14 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("9. Ver equipos por goles ");
             System.out.println("10. Descargar CSV de equipo");
             System.out.println("11.Ver jugadores que no ingresaron");
-            System.out.print("12. SALIR : ");
+            System.out.println("12. Jugador con más minutos");
+            System.out.print("13. SALIR : ");
 
             condition = this.scanner.nextInt();
             scanner.nextLine();
             ejecutarOpcion(condition);
 
-        } while (condition != 12);
+        } while (condition != 13);
         return condition;
     }
 
@@ -128,6 +129,11 @@ public class MenuServiceImpl implements MenuService {
                 System.out.println("\n");
                 break;
             case 12:
+                System.out.println("\n");
+                System.out.println("El jugador con más minutos es: " + equipoService.jugadorConMasMinutos().getNombre());
+                System.out.println("\n");
+                break;
+            case 13:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");
