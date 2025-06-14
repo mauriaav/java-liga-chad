@@ -12,4 +12,5 @@ public interface EquipoService {
     void crearEquipoTest();
     List<Equipo> equiposOrdenados();
     List<Jugador> suplentesQueNoIngresaron();
+    Jugador jugadorConMasMinutos();
 }
