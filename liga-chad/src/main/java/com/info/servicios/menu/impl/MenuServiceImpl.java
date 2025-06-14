@@ -3,6 +3,8 @@ package com.info.servicios.menu.impl;
 import com.info.dominio.Equipo;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.salidautils.ImprimirJugadoresDeEquipo;
+import com.info.servicios.generadorCSV.GeneradorCVSService;
+import com.info.servicios.generadorCSV.impl.GeneradorCVSServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
 import com.info.servicios.gestorPartidos.impl.PartidoServiceImpl;
 import com.info.servicios.ligaChad.LigaChadService;
@@ -23,6 +25,7 @@ public class MenuServiceImpl implements MenuService {
     private JugadorService jugadorService;
     private PartidoService partidoService;
     private LigaChadService ligaChadService;
+    GeneradorCVSService generadorCVSService;
     Scanner scanner ;
 
     public MenuServiceImpl (){
@@ -32,6 +35,7 @@ public class MenuServiceImpl implements MenuService {
         this.partidoService = new PartidoServiceImpl(scanner);
         this.jugadorService = new JugadorServiceImpl(scanner);
         this.ligaChadService = new LigaChadServiceImpl(scanner);
+        this.generadorCVSService = new GeneradorCVSServiceImpl();
     }
 
     @Override
@@ -50,13 +54,14 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("7. Ver goleador de la liga");
             System.out.println("8. Ver promedio de gol de los equipos");
             System.out.println("9. Ver equipos por goles ");
-            System.out.print("10. SALIR : ");
+            System.out.println("10. Descargar CSV de equipo");
+            System.out.print("11. SALIR : ");
 
             condition = this.scanner.nextInt();
             scanner.nextLine();
             ejecutarOpcion(condition);
 
-        } while (condition != 10);
+        } while (condition != 11);
         return condition;
     }
 
@@ -111,6 +116,11 @@ public class MenuServiceImpl implements MenuService {
                 System.out.println("\n");
                 break;
             case 10:
+                System.out.println("\n");
+                generadorCVSService.exportarDatos(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos()));
+                System.out.println("\n");
+                break;
+            case 11:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");
