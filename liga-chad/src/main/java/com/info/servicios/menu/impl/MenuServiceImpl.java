@@ -3,6 +3,7 @@ package com.info.servicios.menu.impl;
 import com.info.dominio.Equipo;
 import com.info.salidautils.ImprimirEquipos;
 import com.info.salidautils.ImprimirJugadoresDeEquipo;
+import com.info.salidautils.ImprimirJugadoresPlano;
 import com.info.servicios.generadorCSV.GeneradorCVSService;
 import com.info.servicios.generadorCSV.impl.GeneradorCVSServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
@@ -55,13 +56,14 @@ public class MenuServiceImpl implements MenuService {
             System.out.println("8. Ver promedio de gol de los equipos");
             System.out.println("9. Ver equipos por goles ");
             System.out.println("10. Descargar CSV de equipo");
-            System.out.print("11. SALIR : ");
+            System.out.println("11.Ver jugadores que no ingresaron");
+            System.out.print("12. SALIR : ");
 
             condition = this.scanner.nextInt();
             scanner.nextLine();
             ejecutarOpcion(condition);
 
-        } while (condition != 11);
+        } while (condition != 12);
         return condition;
     }
 
@@ -121,6 +123,11 @@ public class MenuServiceImpl implements MenuService {
                 System.out.println("\n");
                 break;
             case 11:
+                System.out.println("\n");
+                ImprimirJugadoresPlano.imprimir(equipoService.suplentesQueNoIngresaron());
+                System.out.println("\n");
+                break;
+            case 12:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");
