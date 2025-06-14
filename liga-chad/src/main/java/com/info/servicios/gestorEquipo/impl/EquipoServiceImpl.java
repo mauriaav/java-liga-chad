@@ -1,6 +1,8 @@
 package com.info.servicios.gestorEquipo.impl;
 
 import com.info.dominio.Equipo;
+import com.info.dominio.Jugador;
+import com.info.dominio.JugadorSuplente;
 import com.info.dominio.Partido;
 import com.info.entradautils.CreadorDeEquiposUtil;
 import com.info.servicios.gestorEquipo.EquipoService;
@@ -62,5 +64,18 @@ public class EquipoServiceImpl implements EquipoService {
         List<Equipo> listaOrdenada = new ArrayList<>(equipos);
         listaOrdenada.sort((e1,e2) -> Integer.compare(golesPorEquipo.get(e2),golesPorEquipo.get(e1)));
         return listaOrdenada;
+    }
+
+    @Override
+    public List<Jugador> suplentesQueNoIngresaron(){
+        List<Jugador> jugadoresSinJugar = new ArrayList<>();
+        for(Equipo equipo : equipos){
+            for(Jugador jugador : equipo.getJugadores()){
+                if(jugador instanceof JugadorSuplente && ((JugadorSuplente) jugador).getpartidosIngresados() ==0){
+                    jugadoresSinJugar.add(jugador);
+                }
+            }
+        }
+        return jugadoresSinJugar;
     }
 }
