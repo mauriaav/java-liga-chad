@@ -1,6 +1,7 @@
 package com.info.servicios.seleccionadores.seleccionadorDeJugadores.impl;
 
 import com.info.dominio.Jugador;
+import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.seleccionadores.seleccionadorDeJugadores.SeleccionadorDeJugadores;
 
 import java.util.List;
@@ -17,24 +18,14 @@ public class SeleccionadorDeJugadoresImpl implements SeleccionadorDeJugadores {
             System.out.println("No hay jugadores disponibles.");
             return null;
         }
-
-        System.out.println("--Jugadores Disponibles--");
-        for (int i = 0; i < jugadores.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, jugadores.get(i).getNombre());
-        }
-
         int opcion = -1;
         do {
-            System.out.print("Seleccione un jugador (número): ");
-            try {
-                opcion = Integer.parseInt(scanner.nextLine());
-                if (opcion < 1 || opcion > jugadores.size()) {
-                    System.out.println("Opción inválida.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Ingrese un número válido.");
+            System.out.println("--Jugadores Disponibles--");
+            for (int i = 0; i < jugadores.size(); i++) {
+                System.out.printf("%d. %s%n", i + 1, jugadores.get(i).getNombre());
             }
-        } while (opcion < 1 || opcion > jugadores.size());
+            opcion = ValidadoresDeEntradas.leerEnteroRango(scanner,"Seleccione un jugador (número):",1,jugadores.size());
+        }while (opcion==-1);
 
         return jugadores.get(opcion - 1);
     }

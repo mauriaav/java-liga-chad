@@ -1,7 +1,7 @@
 package com.info.servicios.gestorPartidos.impl;
 
 import com.info.dominio.*;
-import com.info.entradautils.CrearGolesUtil;
+import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.gestorJugadores.JugadorService;
 import com.info.servicios.gestorJugadores.impl.JugadorServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
@@ -18,14 +18,12 @@ public class PartidoServiceImpl implements PartidoService {
     private final SeleccionadorDeEquipos seleccionadorDeEquipos;
     private final SeleccionadorDeJugadores seleccionadorDeJugadores;
     private final JugadorService jugadorService;
-    private final CrearGolesUtil crearGolesUtil;
     private final MenuService siNoMenu;
     private final Scanner scanner;
 
     public PartidoServiceImpl(Scanner scanner){
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
         this.seleccionadorDeJugadores = new SeleccionadorDeJugadoresImpl(scanner);
-        this.crearGolesUtil = new CrearGolesUtil(scanner);
         this.jugadorService = new JugadorServiceImpl(scanner);
         this.siNoMenu = new MenuSiNoImpl(scanner);
         this.scanner = scanner;
@@ -51,13 +49,11 @@ public class PartidoServiceImpl implements PartidoService {
             return null;
         }
 
-        System.out.println("\nCuántos goles hizo el local?");
-        int golesLocal = crearGolesUtil.crearGol();
+        int golesLocal = ValidadoresDeEntradas.leerEnteroPositivo(scanner,"Cuántos goles hizo " + equipoLocal.getNombre());
         Map<Jugador,Integer> golesPorJugador = new HashMap<>(this.quienHizoGoles(equipoLocal,golesLocal));
         this.minutosEIngresos(equipoLocal);
 
-        System.out.println("\nCuántos goles hizo el vistante?");
-        int golesVisitante = crearGolesUtil.crearGol();
+        int golesVisitante = ValidadoresDeEntradas.leerEnteroPositivo(scanner,"Cuántos goles hizo " +equipoVisitante.getNombre());
         golesPorJugador.putAll(this.quienHizoGoles(equipoVisitante,golesVisitante));
         this.minutosEIngresos(equipoVisitante);
 
@@ -77,7 +73,7 @@ public class PartidoServiceImpl implements PartidoService {
         System.out.println();
         System.out.println("Quién hizo los goles de " + e.getNombre()+"?");
         for (int i = 1; i <= goles; i++){
-            System.out.println("Gol número " + i +".\nLo hizo: ");
+            System.out.println("El gol número " + i +".\nLo hizo: ");
             Jugador autorGol = seleccionadorDeJugadores.seleccionar(e.getJugadores());
             autorGol.agregarGol();
             golesPorJugador.put(autorGol, golesPorJugador.getOrDefault(autorGol, 0) + 1);
@@ -104,9 +100,8 @@ public class PartidoServiceImpl implements PartidoService {
         for (Jugador titular : titulares){
             ((JugadorTitular) titular).agregarMinutosJugados(90);
         }
-        System.out.println("Ingresó algún suplente?");
-        int condition = 0;
-        if (siNoMenu.seleccionarOpcionMenu()==1){
+        boolean condition = Boolean.TRUE;
+        if (ValidadoresDeEntradas.confirmar(scanner,"Ingresó algún suplente?" )){
             do{
                 if(titulares.isEmpty()){
                     System.out.println("No hay más jugadores para hacer cambios.");
@@ -116,18 +111,14 @@ public class PartidoServiceImpl implements PartidoService {
                 System.out.println("Qué jugador salió?");
                 JugadorTitular jugadorRetirado =  (JugadorTitular) seleccionadorDeJugadores.seleccionar(titulares);
                 titulares.remove(jugadorRetirado);
-                System.out.println("En qué minuto (m) salió? ");
-                int minutoSalida = scanner.nextInt();
-                scanner.nextLine();//agregar validador de entero positivo
+                int minutoSalida = ValidadoresDeEntradas.leerEnteroPositivo(scanner,"En qué minuto (m) salió?:");
                 jugadorRetirado.restarMinutosJugados(90-minutoSalida);
                 System.out.println("Qué jugador ingresó?");
                 JugadorSuplente jugadorIngresado = (JugadorSuplente)seleccionadorDeJugadores.seleccionar(suplentes);
                 suplentes.remove(jugadorIngresado);
                 jugadorIngresado.agregarPartidosIngresados();
-
-                System.out.println("Hubo algún otro cambio?");
-                condition = siNoMenu.seleccionarOpcionMenu();
-            }while (condition!=2);
+                condition = ValidadoresDeEntradas.confirmar(scanner,"Hubo algún otro cambio?");
+            }while (condition);
         }
     }
 }
