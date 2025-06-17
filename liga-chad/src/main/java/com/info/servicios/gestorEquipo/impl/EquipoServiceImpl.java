@@ -1,7 +1,7 @@
 package com.info.servicios.gestorEquipo.impl;
 
 import com.info.dominio.*;
-import com.info.entradautils.CreadorDeEquiposUtil;
+import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.gestorEquipo.EquipoService;
 
 import java.util.*;
@@ -10,16 +10,14 @@ import java.util.*;
 public class EquipoServiceImpl implements EquipoService {
     private List<Equipo> equipos = new ArrayList<>();
     private Scanner scanner;
-    private CreadorDeEquiposUtil creadorDeEquiposUtil;
 
     public EquipoServiceImpl(Scanner scanner){
         this.scanner = scanner;
-        this.creadorDeEquiposUtil = new CreadorDeEquiposUtil(scanner);
     }
 
     @Override
     public Equipo crearEquipo (){
-        Equipo equipo = new Equipo(creadorDeEquiposUtil.crearEquipo());
+        Equipo equipo = new Equipo(ValidadoresDeEntradas.leerTextoNoVacio(scanner,"Ingrese un nombre para el equipo: "));
         equipos.add(equipo);
         return equipo;
     }

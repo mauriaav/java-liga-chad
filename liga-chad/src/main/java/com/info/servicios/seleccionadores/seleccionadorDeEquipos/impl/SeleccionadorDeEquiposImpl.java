@@ -1,6 +1,7 @@
 package com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl;
 
 import com.info.dominio.Equipo;
+import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 
 import java.util.List;
@@ -24,19 +25,7 @@ public class SeleccionadorDeEquiposImpl implements SeleccionadorDeEquipos {
             System.out.printf("%d. %s%n", i + 1, equipos.get(i).getNombre());
         }
 
-        int opcion = -1;
-        do {
-            System.out.print("Seleccione un equipo (número): ");
-            try {
-                opcion = Integer.parseInt(scanner.nextLine());
-                if (opcion < 1 || opcion > equipos.size()) {
-                    System.out.println("Opción inválida.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Ingrese un número válido.");
-            }
-        } while (opcion < 1 || opcion > equipos.size());
-
+        int opcion = ValidadoresDeEntradas.leerEnteroRango(scanner,"Seleccione un equipo (número): ",1,equipos.size());
         return equipos.get(opcion - 1);
     }
 }

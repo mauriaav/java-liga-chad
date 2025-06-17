@@ -4,7 +4,7 @@ import com.info.dominio.Equipo;
 import com.info.dominio.Jugador;
 import com.info.dominio.JugadorSuplente;
 import com.info.dominio.JugadorTitular;
-import com.info.entradautils.CreadorJugadorUtil;
+import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.gestorJugadores.JugadorService;
 import com.info.servicios.seleccionadores.seleccionadorDeJugadores.SeleccionadorDeJugadores;
 import com.info.servicios.seleccionadores.seleccionadorDeJugadores.impl.SeleccionadorDeJugadoresImpl;
@@ -16,22 +16,21 @@ import java.util.List;
 import java.util.Scanner;
 
 public class JugadorServiceImpl implements JugadorService {
-    private CreadorJugadorUtil creadorJugadorUtil;
     private final Scanner scanner;
     private final SeleccionadorDeJugadores seleccionadorDeJugadores;
     private final SeleccionadorDeEquipos seleccionadorDeEquipos;
     public JugadorServiceImpl(Scanner scanner){
         this.scanner = scanner;
-        this.creadorJugadorUtil = new CreadorJugadorUtil(this.scanner);
         this.seleccionadorDeJugadores = new SeleccionadorDeJugadoresImpl(scanner);
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
     }
 
     @Override
     public void crearJugador(Equipo equipo){
-        String nombreJugador = creadorJugadorUtil.nombreJugador();
-        int edadJugador = creadorJugadorUtil.edadJugador();
-        if(creadorJugadorUtil.tipoDeJugador()==1){
+        String nombreJugador = ValidadoresDeEntradas.leerTextoNoVacio(scanner, "Ingrese el nombre del jugador:");
+        int edadJugador = ValidadoresDeEntradas.leerEnteroRango(scanner,"Ingrese la edad del jugador: ",1,100);
+        int tipoJugador = ValidadoresDeEntradas.leerEnteroRango(scanner,"Es titular o suplente? 1. Titular 2. Suplente ",1,2);
+        if(tipoJugador==1){
             Jugador nuevoJugador = new JugadorTitular(nombreJugador,edadJugador,equipo);
             equipo.agregarJugador(nuevoJugador);
         }
@@ -44,13 +43,12 @@ public class JugadorServiceImpl implements JugadorService {
 
     @Override
     public void crearJugadores(Equipo equipo){
-        String opcion = "";
-        while(!opcion.equals("2")){
-            System.out.println("-----Crear jugadores para " + equipo.getNombre());
+        boolean opcion = Boolean.TRUE;
+        do{
+            System.out.println( "Crear jugadores para " + equipo.getNombre());
             this.crearJugador(equipo);
-            System.out.print("Deseas seguir creando jugadores?\n1.Si\n2.No\nOpción: ");
-            opcion = scanner.nextLine();
-        }
+            opcion = ValidadoresDeEntradas.confirmar(scanner,"Deseas seguir creando jugadores?");
+        }while(opcion);
     }
 
     @Override
