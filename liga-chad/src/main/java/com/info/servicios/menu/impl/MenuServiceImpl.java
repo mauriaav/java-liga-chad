@@ -1,9 +1,6 @@
 package com.info.servicios.menu.impl;
 
-import com.info.dominio.Equipo;
-import com.info.salidautils.ImprimirEquipos;
-import com.info.salidautils.ImprimirJugadoresDeEquipo;
-import com.info.salidautils.ImprimirJugadoresPlano;
+import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.generadorCSV.GeneradorCVSService;
 import com.info.servicios.generadorCSV.impl.GeneradorCVSServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
@@ -26,6 +23,9 @@ public class MenuServiceImpl implements MenuService {
     private JugadorService jugadorService;
     private PartidoService partidoService;
     private LigaChadService ligaChadService;
+    private MenuService MenuEquipo;
+    private MenuService MenuJugador;
+    private MenuService MenuEstadisticas;
     GeneradorCVSService generadorCVSService;
     Scanner scanner ;
 
@@ -37,6 +37,9 @@ public class MenuServiceImpl implements MenuService {
         this.jugadorService = new JugadorServiceImpl(scanner);
         this.ligaChadService = new LigaChadServiceImpl(scanner);
         this.generadorCVSService = new GeneradorCVSServiceImpl();
+        this.MenuEquipo = new MenuEquiposServiceImpl(scanner,equipoService,jugadorService);
+        this.MenuJugador = new MenuJugadoresServiceImpl(scanner,equipoService,jugadorService,seleccionadorDeEquipos);
+        this.MenuEstadisticas = new MenuEstadisticasServiceImpl(scanner,equipoService,ligaChadService);
     }
 
     @Override
@@ -46,25 +49,18 @@ public class MenuServiceImpl implements MenuService {
 
         do {
             System.out.println("INDIQUE UNA OPCION : ");
-            System.out.println("1. Crear equipo");
-            System.out.println("2. Obtener equipos");
-            System.out.println("3. Crear jugador");
-            System.out.println("4. Ver jugadores");
-            System.out.println("5. Transferir jugadores");
-            System.out.println("6. Jugar partido");
-            System.out.println("7. Ver goleador de la liga");
-            System.out.println("8. Ver promedio de gol de los equipos");
-            System.out.println("9. Ver equipos por goles ");
-            System.out.println("10. Descargar CSV de equipo");
-            System.out.println("11.Ver jugadores que no ingresaron");
-            System.out.println("12. Jugador con más minutos");
-            System.out.print("13. SALIR : ");
+            System.out.println("1. Gestionar equipos");
+            System.out.println("2. Gestionar jugadores");
+            System.out.println("3. Jugar partido");
+            System.out.println("4. Estadísticas");
+            System.out.println("5. Descargar CSV de equipo");
+            System.out.println("6. SALIR : ");
 
-            condition = this.scanner.nextInt();
-            scanner.nextLine();
+            condition = ValidadoresDeEntradas.leerEnteroPositivo(scanner,"Seleccione una opción: ");
             ejecutarOpcion(condition);
 
-        } while (condition != 13);
+        } while (condition != 6);
+        scanner.close();
         return condition;
     }
 
@@ -73,67 +69,30 @@ public class MenuServiceImpl implements MenuService {
         switch (opcion) {
             case 1:
                 System.out.println("\n");
-                Equipo nuevoEquipo=equipoService.crearEquipo();
-                jugadorService.crearJugadores(nuevoEquipo);
+                MenuEquipo.seleccionarOpcionMenu();
                 System.out.println("\n");
                 break;
             case 2:
                 System.out.println("\n");
-                ImprimirEquipos.imprimir(equipoService);
+                MenuJugador.seleccionarOpcionMenu();
                 System.out.println("\n");
                 break;
             case 3:
                 System.out.println("\n");
-                jugadorService.crearJugador(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos()));
+                partidoService.crearPartido(equipoService.getEquipos());
                 System.out.println("\n");
                 break;
             case 4:
                 System.out.println("\n");
-                Equipo seleccionado = seleccionadorDeEquipos.seleccionar(equipoService.getEquipos());
-                ImprimirJugadoresDeEquipo.imprimir(seleccionado.getJugadores());
+                MenuEstadisticas.seleccionarOpcionMenu();
                 System.out.println("\n");
                 break;
             case 5:
                 System.out.println("\n");
-                jugadorService.transferirJugadorEntreEquipos(equipoService.getEquipos());
-                System.out.println("\n");
-                break;
-            case 6:
-                System.out.println("\n");
-                partidoService.crearPartido(equipoService.getEquipos());
-                System.out.println("\n");
-                break;
-            case 7:
-                System.out.println("\n");
-                ligaChadService.goleadorDeLaLiga(equipoService.getEquipos());
-                System.out.println("\n");
-                break;
-            case 8:
-                System.out.println("\n");
-                ligaChadService.promedioGol(equipoService.getEquipos());
-                System.out.println("\n");
-                break;
-            case 9:
-                System.out.println("\n");
-                ImprimirEquipos.imprimirOrdenado(equipoService);
-                System.out.println("\n");
-                break;
-            case 10:
-                System.out.println("\n");
                 generadorCVSService.exportarDatos(seleccionadorDeEquipos.seleccionar(equipoService.getEquipos()));
                 System.out.println("\n");
                 break;
-            case 11:
-                System.out.println("\n");
-                ImprimirJugadoresPlano.imprimir(equipoService.suplentesQueNoIngresaron());
-                System.out.println("\n");
-                break;
-            case 12:
-                System.out.println("\n");
-                System.out.println("El jugador con más minutos es: " + equipoService.jugadorConMasMinutos().getNombre());
-                System.out.println("\n");
-                break;
-            case 13:
+            case 6:
                 System.out.println("\n");
                 System.out.println("Adios.");
                 System.out.println("\n");
@@ -145,8 +104,6 @@ public class MenuServiceImpl implements MenuService {
                 jugadorService.crearJugadoresTest(equipoService.getEquipos().get(1));
                 System.out.println("\n");
                 break;
-
-
 
             default:
                 break;
