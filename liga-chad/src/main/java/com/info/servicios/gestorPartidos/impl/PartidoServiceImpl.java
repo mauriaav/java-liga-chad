@@ -5,8 +5,6 @@ import com.info.entradautils.ValidadoresDeEntradas;
 import com.info.servicios.gestorJugadores.JugadorService;
 import com.info.servicios.gestorJugadores.impl.JugadorServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
-import com.info.servicios.menu.MenuService;
-import com.info.servicios.menu.impl.MenuSiNoImpl;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.SeleccionadorDeEquipos;
 import com.info.servicios.seleccionadores.seleccionadorDeEquipos.impl.SeleccionadorDeEquiposImpl;
 import com.info.servicios.seleccionadores.seleccionadorDeJugadores.SeleccionadorDeJugadores;
@@ -18,14 +16,12 @@ public class PartidoServiceImpl implements PartidoService {
     private final SeleccionadorDeEquipos seleccionadorDeEquipos;
     private final SeleccionadorDeJugadores seleccionadorDeJugadores;
     private final JugadorService jugadorService;
-    private final MenuService siNoMenu;
     private final Scanner scanner;
 
     public PartidoServiceImpl(Scanner scanner){
         this.seleccionadorDeEquipos = new SeleccionadorDeEquiposImpl(scanner);
         this.seleccionadorDeJugadores = new SeleccionadorDeJugadoresImpl(scanner);
         this.jugadorService = new JugadorServiceImpl(scanner);
-        this.siNoMenu = new MenuSiNoImpl(scanner);
         this.scanner = scanner;
     }
 
@@ -100,7 +96,7 @@ public class PartidoServiceImpl implements PartidoService {
         for (Jugador titular : titulares){
             ((JugadorTitular) titular).agregarMinutosJugados(90);
         }
-        boolean condition = Boolean.TRUE;
+        boolean condition;
         if (ValidadoresDeEntradas.confirmar(scanner,"Ingresó algún suplente?" )){
             do{
                 if(titulares.isEmpty()){

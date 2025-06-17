@@ -18,15 +18,12 @@ public class SeleccionadorDeJugadoresImpl implements SeleccionadorDeJugadores {
             System.out.println("No hay jugadores disponibles.");
             return null;
         }
-        int opcion = -1;
-        do {
-            System.out.println("--Jugadores Disponibles--");
-            for (int i = 0; i < jugadores.size(); i++) {
-                System.out.printf("%d. %s%n", i + 1, jugadores.get(i).getNombre());
-            }
-            opcion = ValidadoresDeEntradas.leerEnteroRango(scanner,"Seleccione un jugador (número):",1,jugadores.size());
-        }while (opcion==-1);
 
+        System.out.println("--Jugadores Disponibles--");
+        for (int i = 0; i < jugadores.size(); i++) {
+            System.out.printf("%d. %s%n", i + 1, jugadores.get(i).getNombre());
+        }
+        int opcion = ValidadoresDeEntradas.leerEnteroRango(scanner,"Seleccione un jugador (número):",1,jugadores.size());
         return jugadores.get(opcion - 1);
     }
 }
