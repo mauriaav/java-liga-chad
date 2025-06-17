@@ -7,7 +7,6 @@ import com.opencsv.CSVWriter;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 public class GeneradorCVSServiceImpl implements GeneradorCVSService {
     private final String UBICACION_ARCHIVO = "\\src\\main\\java\\com\\info\\recursos\\";
@@ -15,6 +14,10 @@ public class GeneradorCVSServiceImpl implements GeneradorCVSService {
 
     @Override
     public void exportarDatos(Equipo equipo){
+        if(equipo == null){
+            System.out.println("No hay equipos para descargar estadísticas, por lo menos cree 1.");
+            return;
+        }
         String ruta = System.getProperty("user.dir").concat(UBICACION_ARCHIVO).concat("datos-liga.csv");
         try {
             this.csvWriter = new CSVWriter(new FileWriter(ruta));

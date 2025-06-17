@@ -15,7 +15,7 @@ public class SeleccionadorDeEquiposImpl implements SeleccionadorDeEquipos {
     }
     @Override
     public Equipo seleccionar(List<Equipo> equipos) {
-        if (equipos.isEmpty()) {
+        if ( equipos == null ||equipos.isEmpty()) {
             System.out.println("No hay equipos disponibles.");
             return null;
         }
