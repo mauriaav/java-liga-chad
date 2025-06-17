@@ -21,10 +21,6 @@ public class Jugador {
         return equipo;
     }
 
-    public void setEquipo(Equipo e){
-        this.equipo = e;
-    }
-
     public int getEdad() {
         return edad;
     }
@@ -33,12 +29,12 @@ public class Jugador {
         return cantidadGoles;
     }
 
-    public String getTipoJugador(){
-        return "Libre";
+    public void setEquipo(Equipo e){
+        this.equipo = e;
     }
 
-    public void agregarGoles(int goles){
-        this.cantidadGoles =cantidadGoles+ goles;
+    public String getTipoJugador(){
+        return "Libre";
     }
 
     public void agregarGol(){
