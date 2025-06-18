@@ -9,7 +9,7 @@ public interface EquipoService {
     Equipo crearEquipo();
     List<Equipo> getEquipos();
     int calcularGolesEquipo(Equipo equipo);
-    void crearEquipoTest();
+    Equipo crearEquipoTest(String nombre);
     List<Equipo> equiposOrdenados();
     List<Jugador> suplentesQueNoIngresaron();
     Jugador jugadorConMasMinutos();

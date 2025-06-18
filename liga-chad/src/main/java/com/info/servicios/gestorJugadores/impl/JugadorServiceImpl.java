@@ -88,11 +88,15 @@ public class JugadorServiceImpl implements JugadorService {
     }
 
     @Override
-    public void crearJugadoresTest(Equipo equipo){
-        Jugador jugador1 = new JugadorTitular("Mastantuono"+equipo.getNombre(),17,equipo);
-        equipo.agregarJugador(jugador1);
-        Jugador jugador2 = new JugadorSuplente("Borja"+equipo.getNombre(),29,equipo);
-        equipo.agregarJugador(jugador2);
+    public void crearJugadoresTest(Equipo equipo, String nombre, int edad, int tipo){
+        if(tipo ==1){
+            Jugador jugador1= new JugadorTitular(nombre,edad,equipo);
+            equipo.agregarJugador(jugador1);
+        }
+        if(tipo ==2){
+            Jugador jugador1= new JugadorSuplente(nombre,edad,equipo);
+            equipo.agregarJugador(jugador1);
+        }
     }
 
     @Override
