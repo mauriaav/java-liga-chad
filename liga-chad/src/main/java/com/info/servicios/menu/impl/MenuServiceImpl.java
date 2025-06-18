@@ -1,6 +1,8 @@
 package com.info.servicios.menu.impl;
 
 import com.info.entradautils.ValidadoresDeEntradas;
+import com.info.servicios.TestService.TestService;
+import com.info.servicios.TestService.impl.TestServiceImpl;
 import com.info.servicios.generadorCSV.GeneradorCVSService;
 import com.info.servicios.generadorCSV.impl.GeneradorCVSServiceImpl;
 import com.info.servicios.gestorPartidos.PartidoService;
@@ -26,6 +28,7 @@ public class MenuServiceImpl implements MenuService {
     private MenuService MenuEquipo;
     private MenuService MenuJugador;
     private MenuService MenuEstadisticas;
+    private TestService testService;
     GeneradorCVSService generadorCVSService;
     Scanner scanner ;
 
@@ -40,6 +43,8 @@ public class MenuServiceImpl implements MenuService {
         this.MenuEquipo = new MenuEquiposServiceImpl(scanner,equipoService,jugadorService);
         this.MenuJugador = new MenuJugadoresServiceImpl(scanner,equipoService,jugadorService,seleccionadorDeEquipos);
         this.MenuEstadisticas = new MenuEstadisticasServiceImpl(scanner,equipoService,ligaChadService);
+        this.testService = new TestServiceImpl(equipoService,jugadorService);
+
     }
 
     @Override
@@ -99,9 +104,7 @@ public class MenuServiceImpl implements MenuService {
                 break;
             case 99:
                 System.out.println("\n");
-                equipoService.crearEquipoTest();
-                jugadorService.crearJugadoresTest(equipoService.getEquipos().get(0));
-                jugadorService.crearJugadoresTest(equipoService.getEquipos().get(1));
+                testService.cargarDatos();
                 System.out.println("\n");
                 break;
 

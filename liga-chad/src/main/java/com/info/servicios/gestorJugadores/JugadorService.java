@@ -11,7 +11,7 @@ public interface JugadorService {
     void crearJugador(Equipo equipo);
     void crearJugadores(Equipo equipo);
     void transferirJugadorEntreEquipos(List<Equipo> equipos);
-    void crearJugadoresTest(Equipo equipo);
+    void crearJugadoresTest(Equipo equipo, String nombre, int edad, int tipo);
     List<Jugador> jugadoresTitular(Equipo equipo);
     List<Jugador> jugadoresSuplentes(Equipo equipo);
 }

@@ -28,11 +28,11 @@ public class EquipoServiceImpl implements EquipoService {
     }
 
     @Override
-    public void crearEquipoTest(){
-        Equipo equipoTest = new Equipo("RiverT");
-        Equipo equipoTest2 = new Equipo("BocaT");
+    public Equipo crearEquipoTest(String nombre){
+        Equipo equipoTest = new Equipo(nombre);
         equipos.add(equipoTest);
-        equipos.add(equipoTest2);
+        return  equipoTest;
+
     }
 
     @Override
